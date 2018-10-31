@@ -14,6 +14,8 @@ declare(strict_types=1);
  * @see SQL-Formatter on https://github.com/jdorn/sql-formatter
  */
 
+define('REPO', 'https://github.com/cavo789/sql_formatter');
+
 $task = filter_input(INPUT_POST, 'task', FILTER_SANITIZE_STRING);
 
 if ($task == 'format') {
@@ -34,6 +36,11 @@ if ($task == 'format') {
 $SQL = 'SELECT LAT_N, CITY, TEMP_F FROM STATS, STATION ' .
     'WHERE MONTH = 7 AND STATS.ID = STATION.ID ORDER BY TEMP_F';
 
+// Get the GitHub corner
+$github = '';
+if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
+    $github = str_replace('%REPO%', REPO, file_get_contents($cat));
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +56,7 @@ $SQL = 'SELECT LAT_N, CITY, TEMP_F FROM STATS, STATION ' .
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     </head>
     <body>
+        <?php echo $github; ?>
         <div class="container">
             <div class="page-header"><h1>SQL Formatter</h1></div>
             <div class="container">
