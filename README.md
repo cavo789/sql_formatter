@@ -1,3 +1,5 @@
+![Banner](images/banner.jpg)
+
 # SQL Formatter
 
 Very straight-forward script for formatting SQL statement.
