@@ -71,7 +71,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                                 </ol>
                             </div>
                             <div class="col-sm">
-                                <img src="https://raw.githubusercontent.com/cavo789/sql_formatter/master/image/demo.gif" alt="Demo">
+                                <img height="300px" src="https://raw.githubusercontent.com/cavo789/sql_formatter/master/images/demo.gif" alt="Demo">
                             </div>
                         </div>
                     </div>
