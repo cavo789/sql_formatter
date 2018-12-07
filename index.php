@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-/**
+/*
  * AUTHOR : AVONTURE Christophe
  *
  * Written date : 9 october 2018
@@ -18,7 +18,7 @@ define('REPO', 'https://github.com/cavo789/sql_formatter');
 
 $task = filter_input(INPUT_POST, 'task', FILTER_SANITIZE_STRING);
 
-if ($task == 'format') {
+if ('format' == $task) {
     // Retrieve the SQL statement
     $SQL = base64_decode(filter_input(INPUT_POST, 'sql', FILTER_SANITIZE_STRING));
 
@@ -60,6 +60,22 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
         <div class="container">
             <div class="page-header"><h1>SQL Formatter</h1></div>
             <div class="container">
+                <details>
+                    <summary>How to use?</summary>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm">
+                                <ol>
+                                    <li>Copy/Paste your SQL statement in the textbox</li>
+                                    <li>Click on the Format button</li>
+                                </ol>
+                            </div>
+                            <div class="col-sm">
+                                <img src="https://raw.githubusercontent.com/cavo789/sql_formatter/master/image/demo.gif" alt="Demo">
+                            </div>
+                        </div>
+                    </div>
+                </details>
                 <div class="form-group">
                     <label for="SQL">Copy/Paste your SQL statement in the 
                         textbox below then click on the Format button:</label>

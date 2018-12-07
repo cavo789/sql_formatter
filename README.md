@@ -29,7 +29,7 @@ ORDER BY
 
 Just copy/paste your SQL statement into the text box as illustrated here below and click on the `Format` button.
 
-![sql_formatter](images/sql_formatter.png)
+![sql_formatter](images/demo.gif)
 
 ## Source
 
