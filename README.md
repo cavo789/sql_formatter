@@ -1,5 +1,7 @@
 # SQL Formatter
 
+![php 8.2](https://img.shields.io/badge/php-8.2-brightgreen?style=flat)
+
 ![Banner](./banner.svg)
 
 Very straight-forward script for formatting SQL statement.
