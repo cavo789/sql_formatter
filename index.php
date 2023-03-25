@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * AUTHOR : AVONTURE Christophe
@@ -16,11 +16,11 @@ declare(strict_types = 1);
 
 define('REPO', 'https://github.com/cavo789/sql_formatter');
 
-$task = filter_input(INPUT_POST, 'task', FILTER_SANITIZE_STRING);
+$task = filter_input(INPUT_POST, 'task', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 if ('format' == $task) {
     // Retrieve the SQL statement
-    $SQL = base64_decode(filter_input(INPUT_POST, 'sql', FILTER_SANITIZE_STRING));
+    $SQL = base64_decode(filter_input(INPUT_POST, 'sql', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
     // Include the library
     require_once __DIR__ . '/lib/SqlFormatter.php';
@@ -45,79 +45,84 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="author" content="Christophe Avonture" />
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
-        <title>SQL Formatter</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    </head>
-    <body>
-        <?php echo $github; ?>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Christophe Avonture" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
+    <title>SQL Formatter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body>
+    <?php echo $github; ?>
+    <div class="container">
+        <div class="page-header">
+            <h1>SQL Formatter</h1>
+        </div>
         <div class="container">
-            <div class="page-header"><h1>SQL Formatter</h1></div>
-            <div class="container">
-                <details>
-                    <summary>How to use?</summary>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm">
-                                <ol>
-                                    <li>Copy/Paste your SQL statement in the textbox</li>
-                                    <li>Click on the Format button</li>
-                                </ol>
-                            </div>
-                            <div class="col-sm">
-                                <img height="300px" src="https://raw.githubusercontent.com/cavo789/sql_formatter/master/images/demo.gif" alt="Demo">
-                            </div>
+            <details>
+                <summary>How to use?</summary>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm">
+                            <ol>
+                                <li>Copy/Paste your SQL statement in the textbox</li>
+                                <li>Click on the Format button</li>
+                            </ol>
+                        </div>
+                        <div class="col-sm">
+                            <img height="300px" src="https://raw.githubusercontent.com/cavo789/sql_formatter/master/images/demo.gif" alt="Demo">
                         </div>
                     </div>
-                </details>
-                <div class="form-group">
-                    <label for="SQL">Copy/Paste your SQL statement in the 
-                        textbox below then click on the Format button:</label>
-                    <textarea class="form-control" rows="5" id="SQL" name="SQL"><?php echo $SQL; ?></textarea>
                 </div>
-                <button type="button" id="btnFormat" class="btn btn-primary">Format</button>
-                <hr/>
-                <pre id="Result"></pre>
-                <i style="display:block;font-size:0.6em;">
-                    <a href="https://github.com/jdorn/sql-formatter">
-                        SQL Formatter written by Jeremy Dorn
-                    </a>
-                </i>
+            </details>
+            <div class="form-group">
+                <label for="SQL">Copy/Paste your SQL statement in the
+                    textbox below then click on the Format button:</label>
+                <textarea class="form-control" rows="5" id="SQL" name="SQL"><?php echo $SQL; ?></textarea>
             </div>
+            <button type="button" id="btnFormat" class="btn btn-primary">Format</button>
+            <hr />
+            <pre id="Result"></pre>
+            <i style="display:block;font-size:0.6em;">
+                <a href="https://github.com/jdorn/sql-formatter">
+                    SQL Formatter written by Jeremy Dorn
+                </a>
+            </i>
         </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-            $('#btnFormat').click(function(e)  {
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#btnFormat').click(function(e) {
 
-                e.stopImmediatePropagation();
+            e.stopImmediatePropagation();
 
-                var $data = new Object;
-                $data.task = "format";
-                $data.sql = window.btoa($('#SQL').val());
+            var $data = new Object;
+            $data.task = "format";
+            $data.sql = window.btoa($('#SQL').val());
 
-                $.ajax({
-                    beforeSend: function() {
-                        $('#Result').html('<div><span class="ajax_loading">&nbsp;</span><span style="font-style:italic;font-size:1.5em;">Formatting...</span></div>');
-                        $('#btnFormat').prop("disabled", true);
-                    },
-                    async: true,
-                    type: "POST",
-                    url: "<?php echo basename(__FILE__); ?>",
-                    data: $data,
-                    datatype: "html",
-                    success: function (data) {
-                        $('#btnFormat').prop("disabled", false);
-                        $('#Result').html(data);
-                    }
-                }); // $.ajax()
-            });
-        </script>
-    </body>
+            $.ajax({
+                beforeSend: function() {
+                    $('#Result').html('<div><span class="ajax_loading">&nbsp;</span><span style="font-style:italic;font-size:1.5em;">Formatting...</span></div>');
+                    $('#btnFormat').prop("disabled", true);
+                },
+                async: true,
+                type: "POST",
+                url: "<?php echo basename(__FILE__); ?>",
+                data: $data,
+                datatype: "html",
+                success: function(data) {
+                    $('#btnFormat').prop("disabled", false);
+                    $('#Result').html(data);
+                }
+            }); // $.ajax()
+        });
+    </script>
+</body>
+
 </html>
